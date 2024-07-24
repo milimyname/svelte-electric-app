@@ -1,14 +1,19 @@
 <script lang="ts">
-  import { initElectric } from "./init";
+  import { electric } from "./init";
   import ElectricApp from "./ElectricApp.svelte";
+  import { onMount } from "svelte";
+
+  onMount(async () => {
+    console.log("initElectric");
+
+    console.log("App", electric);
+  });
 </script>
 
 <main>
-  {#await initElectric()}
-    <p>loading</p>
-  {:then electric}
+  {#if electric}
     <ElectricApp {electric} />
-  {:catch}
+  {:else}
     <p>error!</p>
-  {/await}
+  {/if}
 </main>

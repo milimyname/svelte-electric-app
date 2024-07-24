@@ -4,30 +4,35 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "backend:start": "electric-sql start --with-postgres",
+    "backend:stop": "electric-sql stop",
+    "backend:up": "electric-sql start --with-postgres --detach",
+    "backend:down": "electric-sql stop --remove",
+    "client:generate": "electric-sql generate",
+    "client:watch": "electric-sql generate --watch",
+    "db:migrate": "electric-sql with-config \"pg-migrations apply --database {{ELECTRIC_PROXY}} --directory ./db/migrations\"",
+    "db:psql": "electric-sql psql",
+    "electric:start": "electric-sql start",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
-  "devDependencies": {
-    "@electric-sql/prisma-generator": "1.1.0",
-
-    "@prisma/client": "4.8.1",
-    "prisma": "4.8.1",
-    "better-sqlite3": "^8.7.0",
-
-
-
-    "@sveltejs/vite-plugin-svelte": "^3.0.0",
-    "@tsconfig/svelte": "^5.0.2",
+  "dependencies": {
+    "electric-sql": "^0.12.0",
     "svelte": "^4.2.3",
     "svelte-check": "^3.6.0",
-    "tslib": "^2.6.2",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0",
-    "wa-sqlite": "rhashimoto/wa-sqlite#master",
-    "electric-sql": "^0.7.1"
-
-
+    "wa-sqlite": "github:rhashimoto/wa-sqlite#semver:^0.9.11"
+  },
+  "devDependencies": {
+    "@databases/pg-migrations": "^5.0.3",
+    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "@tsconfig/svelte": "^5.0.2",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.12"
   }
 }

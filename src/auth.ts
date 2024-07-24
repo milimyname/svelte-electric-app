@@ -1,13 +1,17 @@
-import { insecureAuthToken } from "electric-sql/auth"
-
-// This is just a demo. In a real app, the user ID would
-// usually come from somewhere else :)
-export const dummyUserId = `d4f54ff3-5c5c-4898-ae30-4f3ee630e5c9`
+import { insecureAuthToken } from "electric-sql/auth";
+import { genUUID } from "electric-sql/util";
 
 // Generate an insecure authentication JWT.
 // See https://electric-sql.com/docs/usage/auth for more details.
 export const authToken = () => {
-  const claims = { user_id: dummyUserId }
-
-  return insecureAuthToken(claims)
-}
+  const subKey = "__electric_sub";
+  let sub = window.sessionStorage.getItem(subKey);
+  if (!sub) {
+    // This is just a demo. In a real app, the user ID would
+    // usually come from somewhere else :)
+    sub = genUUID();
+    window.sessionStorage.setItem(subKey, sub);
+  }
+  const claims = { sub };
+  return insecureAuthToken(claims);
+};
